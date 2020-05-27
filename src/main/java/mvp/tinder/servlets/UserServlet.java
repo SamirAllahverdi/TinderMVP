@@ -18,8 +18,6 @@ public class UserServlet extends HttpServlet {
     final TemplateEngine engine;
     private final UserService userService;
     private final LikedService likedService;
-    private int actualID;
-    private User user;
 
     public UserServlet(TemplateEngine engine) {
         this.engine = engine;
@@ -34,10 +32,9 @@ public class UserServlet extends HttpServlet {
         CookiesService cookiesService = new CookiesService(req, resp);
 
         Cookie id = cookiesService.getCookies();
-        actualID = Integer.parseInt(id.getValue());
+       int actualID = Integer.parseInt(id.getValue());
 
-        this.user = userService.get(actualID);
-
+        User user = userService.get(actualID);
         HashMap<String, Object> data = new HashMap<>();
         data.put("id", user.getId());
         data.put("name", user.getName());
@@ -48,6 +45,11 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        CookiesService cookiesService = new CookiesService(req, resp);
+        Cookie id = cookiesService.getCookies();
+        int actualID = Integer.parseInt(id.getValue());
+
+        User user = userService.get(actualID);
         likedService.put(actualID, user);
         resp.sendRedirect("/users");
     }
