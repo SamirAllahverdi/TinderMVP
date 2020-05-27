@@ -20,9 +20,7 @@ import java.util.List;
 public class MessageServlet extends HttpServlet {
     public final TemplateEngine engine;
     private final MessagesService messagesService;
-    private int activeUser;
     private final UserService userService;
-    private String userIdFromParam;
 
     public MessageServlet(TemplateEngine engine) {
         this.messagesService = new MessagesService();
@@ -33,12 +31,12 @@ public class MessageServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        this.userIdFromParam = req.getPathInfo().replace("/", "");
+        String userIdFromParam = req.getPathInfo().replace("/", "");
         resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
 
         CookiesService cookiesService = new CookiesService(req, resp);
         Cookie cookie = cookiesService.getCookies();
-        activeUser = Integer.parseInt(cookie.getValue());
+        int activeUser = Integer.parseInt(cookie.getValue());
 
         List<Message> messages = messagesService.getAll(activeUser, Integer.parseInt(userIdFromParam.replace("/", "")));
         User who = userService.getBy(c -> c.getId() == activeUser).orElse(null);
@@ -56,13 +54,17 @@ public class MessageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String text = req.getParameter("text");
+        String userIdFromParam = req.getPathInfo().replace("/", "");
+        CookiesService cookiesService = new CookiesService(req, resp);
+        Cookie cookie = cookiesService.getCookies();
+        int activeUser = Integer.parseInt(cookie.getValue());
 
         Message message = new Message(activeUser,
                 Integer.parseInt(userIdFromParam.replace("/", "")),
                 text,
                 "today");
-        messagesService.put(activeUser, message);
 
+        messagesService.put(activeUser, message);
         resp.sendRedirect("/messages/" + userIdFromParam);
     }
 }
