@@ -20,7 +20,7 @@ public class RegisterFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig)  {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -41,16 +41,8 @@ public class RegisterFilter implements Filter {
                 }
             }
         } else {
-            if (isHttp(servletRequest)) {
-                filterChain.doFilter(req, resp);
-            } else {
-                throw new IllegalArgumentException("ServletRequest should be instance of HttpServletRequest");
-            }
+            filterChain.doFilter(req, resp);
         }
-    }
-
-    private boolean isHttp(ServletRequest servletRequest) {
-        return servletRequest instanceof HttpServletRequest;
     }
 
     @Override

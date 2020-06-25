@@ -12,7 +12,7 @@ public class CookiesService {
     private HttpServletRequest req;
 
 
-    public CookiesService( HttpServletRequest req, HttpServletResponse resp) {
+    public CookiesService(HttpServletRequest req, HttpServletResponse resp) {
         this.resp = resp;
         this.req = req;
     }
@@ -35,14 +35,10 @@ public class CookiesService {
     }
 
     public void removeCookie() {
-
         Arrays.stream(req.getCookies()).filter(c -> c.getName().
                 equalsIgnoreCase(COOKIE_NAME)).
                 map(a -> new Cookie(a.getName(), a.getValue()) {{
                     setMaxAge(0);
                 }}).forEach(resp::addCookie);
-
     }
-
-
 }

@@ -1,11 +1,15 @@
-package mvp.tinder.server;
+package mvp.tinder.helper;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public class HerokuEnv {
     public static int port() {
-        try{
+        try {
             String port = System.getenv("PORT");
             return Integer.parseInt(port);
         } catch (NumberFormatException e) {
+            log.info("port from environment couldn't be resolved");
             return 5000;
         }
     }

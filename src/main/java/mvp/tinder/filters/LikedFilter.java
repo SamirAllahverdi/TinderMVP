@@ -35,9 +35,9 @@ public class LikedFilter implements Filter {
         Cookie cookie = cookiesService.getCookies();
         int actualID = Integer.parseInt(cookie.getValue());
 
-        List<User> liked = likedService.getAll(actualID,0);
+        List<User> liked = likedService.getAll(actualID, 0);
 
-        if (isHttp(servletRequest) && !liked.isEmpty()) {
+        if (!liked.isEmpty()) {
             filterChain.doFilter(req, resp);
         } else {
             try (OutputStream os = resp.getOutputStream()) {
@@ -49,9 +49,5 @@ public class LikedFilter implements Filter {
     @Override
     public void destroy() {
 
-    }
-
-    private boolean isHttp(ServletRequest servletRequest) {
-        return servletRequest instanceof HttpServletRequest;
     }
 }

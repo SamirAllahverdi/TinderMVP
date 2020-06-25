@@ -39,7 +39,6 @@ public class LoginServlet extends HttpServlet {
         cookiesService.addCookie(a);
         userService.update(a);
         resp.sendRedirect("/users");
-
     }
 }
 

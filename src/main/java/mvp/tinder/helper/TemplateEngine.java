@@ -3,6 +3,7 @@ package mvp.tinder.helper;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+@Log4j2
 public class TemplateEngine {
 
     private final Configuration config;
@@ -26,6 +28,7 @@ public class TemplateEngine {
             setWrapUncheckedExceptions(true);
         }};
     }
+
     public static TemplateEngine resources(final String path_from_project_resources) throws IOException, URISyntaxException {
         String path = Paths
                 .get(TemplateEngine.class.getResource(path_from_project_resources).toURI())
@@ -38,7 +41,8 @@ public class TemplateEngine {
         try (PrintWriter w = resp.getWriter()) {
             config.getTemplate(templateFile).process(data, w);
         } catch (TemplateException | IOException x) {
-            throw new RuntimeException("Freemarker error", x);
+            log.error("Freemarker error");
+            throw new RuntimeException();
         }
     }
 }

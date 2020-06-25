@@ -4,7 +4,6 @@ import mvp.tinder.dao.Dao;
 import mvp.tinder.dao.UserDao;
 import mvp.tinder.entity.User;
 
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -17,36 +16,19 @@ public class UserService {
     }
 
     public void put(int actualId, User user) {
-        try {
-            dao.put(actualId, user);
-        } catch (SQLException e) {
-            throw new RuntimeException("SqlException");
-        }
+        dao.put(actualId, user);
     }
 
     public Optional<User> getBy(Predicate<User> p) {
-        try {
-            return dao.getBy(p);
-        } catch (SQLException e) {
-            throw new RuntimeException("SqlException");
-        }
+        return dao.getBy(p);
     }
 
-   public void update(int id) {
-        try {
-            dao.update(id);
-        } catch (SQLException e) {
-            throw new RuntimeException("SqlException");
-        }
-
+    public void update(int id) {
+        dao.update(id);
     }
 
     public User get(int id) {
-        try {
-            return dao.get(id);
-        } catch (SQLException a) {
-            throw new RuntimeException("SqlException");
-        }
+        return dao.get(id);
     }
 
 }

@@ -1,5 +1,6 @@
 package mvp.tinder.filters;
 
+import lombok.extern.log4j.Log4j2;
 import mvp.tinder.service.CookiesService;
 import mvp.tinder.service.MessagesService;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@Log4j2
 public class MessageFilter implements Filter {
 
     public MessageFilter() {
@@ -35,21 +37,18 @@ public class MessageFilter implements Filter {
             } else {
                 filterChain.doFilter(req, resp);
             }
+
         } else {
+            CookiesService cookiesService = new CookiesService(req, resp);
+            String userIdFromParam = req.getPathInfo().replace("/", "");
 
-            if (isHttp(servletRequest)) {
-                CookiesService cookiesService = new CookiesService(req, resp);
-                String userIdFromParam = req.getPathInfo().replace("/", "");
-
-                if (messageToYourself(cookiesService, userIdFromParam)) {
-                    try (PrintWriter w = servletResponse.getWriter()) {
-                        w.write("Sorry, you can not send message to yourself");
-                    }
-                } else {
-                    filterChain.doFilter(servletRequest, servletResponse);
+            if (messageToYourself(cookiesService, userIdFromParam)) {
+                try (PrintWriter w = servletResponse.getWriter()) {
+                    log.warn("don't try to send message to yourself");
+                    w.write("Sorry, you can not send message to yourself");
                 }
             } else {
-                throw new IllegalArgumentException("ServletRequest should be instance of HttpServletRequest");
+                filterChain.doFilter(servletRequest, servletResponse);
             }
         }
     }
@@ -59,15 +58,9 @@ public class MessageFilter implements Filter {
 
     }
 
-    private boolean isHttp(ServletRequest servletRequest) {
-        return servletRequest instanceof HttpServletRequest;
-    }
-
     private boolean messageToYourself(CookiesService cookiesService, String receiverId) {
         Cookie cookie = cookiesService.getCookies();
         return cookie.getValue().equals(receiverId);
     }
-
-
 }
 

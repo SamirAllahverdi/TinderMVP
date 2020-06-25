@@ -28,7 +28,7 @@ public class LikedServlet extends HttpServlet {
         Cookie cookie = cookiesService.getCookies();
         int actualID = Integer.parseInt(cookie.getValue());
 
-        List<User> liked = likedService.getAll(actualID,0);
+        List<User> liked = likedService.getAll(actualID, 0);
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("likedProfiles", liked);

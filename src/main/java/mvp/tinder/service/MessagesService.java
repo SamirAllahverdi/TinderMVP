@@ -4,7 +4,6 @@ import mvp.tinder.dao.Dao;
 import mvp.tinder.dao.MessagesDao;
 import mvp.tinder.entity.Message;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class MessagesService {
@@ -15,24 +14,14 @@ public class MessagesService {
     }
 
     public List<Message> getAll(int index, int idx) {
-        try {
-            return dao.getAll(index,idx);
-        } catch (SQLException e) {
-            throw new RuntimeException("SqlException");
-        }
-
+        return dao.getAll(index, idx);
     }
 
-    public Message get(int id) throws SQLException {
+    public Message get(int id) {
         return dao.get(id);
     }
 
     public void put(int actualId, Message data) {
-        try {
-            dao.put(actualId, data);
-        } catch (SQLException e) {
-            throw new RuntimeException("SqlException");
-        }
+        dao.put(actualId, data);
     }
-
 }

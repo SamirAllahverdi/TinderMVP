@@ -22,7 +22,7 @@ public class StaticServlet extends HttpServlet {
         String osFileLocation = "src/main/resources/templates/";
         Path path = Paths.get(osFileLocation, subPath, filename);
 
-        try(OutputStream os = resp.getOutputStream()) {
+        try (OutputStream os = resp.getOutputStream()) {
             Files.copy(path, os);
         }
     }

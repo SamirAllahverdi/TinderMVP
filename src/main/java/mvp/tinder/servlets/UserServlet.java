@@ -1,5 +1,6 @@
 package mvp.tinder.servlets;
 
+import lombok.extern.log4j.Log4j2;
 import mvp.tinder.entity.User;
 import mvp.tinder.helper.TemplateEngine;
 import mvp.tinder.service.CookiesService;
@@ -13,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Optional;
 
+@Log4j2
 public class UserServlet extends HttpServlet {
     final TemplateEngine engine;
     private final UserService userService;
     private final LikedService likedService;
-    private int actualID;
-    private User user;
 
     public UserServlet(TemplateEngine engine) {
         this.engine = engine;
@@ -32,11 +33,11 @@ public class UserServlet extends HttpServlet {
         resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
 
         CookiesService cookiesService = new CookiesService(req, resp);
-
         Cookie id = cookiesService.getCookies();
-        actualID = Integer.parseInt(id.getValue());
+        int actualID = Integer.parseInt(id.getValue());
 
-        this.user = userService.get(actualID);
+        User user = userService.get(actualID);
+        log.debug("DoGet" + user);
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("id", user.getId());
@@ -48,10 +49,13 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        likedService.put(actualID, user);
+        CookiesService cookiesService = new CookiesService(req, resp);
+        Cookie id = cookiesService.getCookies();
+        int actualID = Integer.parseInt(id.getValue());
+        String getId = req.getParameter("id");
+        Optional<User> user = userService.getBy(a -> a.getId() == Integer.parseInt(getId));
+        log.debug("DoPost" + user);
+        likedService.put(actualID, user.orElse(null));
         resp.sendRedirect("/users");
     }
 }
-
-
-

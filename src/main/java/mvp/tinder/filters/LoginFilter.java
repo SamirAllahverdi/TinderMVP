@@ -6,7 +6,9 @@ import mvp.tinder.service.UserService;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 public class LoginFilter implements Filter {
@@ -31,25 +33,13 @@ public class LoginFilter implements Filter {
             if (user.isPresent()) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
-                try (PrintWriter w = servletResponse.getWriter()) {
-                    servletResponse.setContentType("text/html");
-                    w.println("<script type=\"text/javascript\">"+
-                            "alert('Credentials are not correct, please try again');"+
-                            "location='/login';"+
-                            "</script>");
+                try (OutputStream os = servletResponse.getOutputStream()) {
+                    Files.copy(Paths.get("src/main/resources/templates/warn2.html"), os);
                 }
             }
         } else {
-            if (isHttp(servletRequest)) {
-                filterChain.doFilter(servletRequest, servletResponse);
-            } else {
-                throw new IllegalArgumentException("ServletRequest should be instance of HttpServletRequest");
-            }
+            filterChain.doFilter(servletRequest, servletResponse);
         }
-    }
-
-    private boolean isHttp(ServletRequest servletRequest) {
-        return servletRequest instanceof HttpServletRequest;
     }
 
     @Override

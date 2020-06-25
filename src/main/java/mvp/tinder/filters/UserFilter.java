@@ -38,20 +38,16 @@ public class UserFilter implements Filter {
                 filterChain.doFilter(req, resp);
             }
         } else {
-            if (isHttp(servletRequest)) {
-                CookiesService cookiesService = new CookiesService(req, resp);
-                Cookie id = cookiesService.getCookies();
-                int actualID = Integer.parseInt(id.getValue());
-                User user = userService.get(actualID);
-                if (user != null) {
-                    filterChain.doFilter(servletRequest, servletResponse);
-                } else {
-                    try (OutputStream os = resp.getOutputStream()) {
-                        Files.copy(Paths.get("src/main/resources/templates/clear.ftl"), os);
-                    }
-                }
+            CookiesService cookiesService = new CookiesService(req, resp);
+            Cookie id = cookiesService.getCookies();
+            int actualID = Integer.parseInt(id.getValue());
+            User user = userService.get(actualID);
+            if (user != null) {
+                filterChain.doFilter(servletRequest, servletResponse);
             } else {
-                throw new IllegalArgumentException("ServletRequest should be instance of HttpServletRequest");
+                try (OutputStream os = resp.getOutputStream()) {
+                    Files.copy(Paths.get("src/main/resources/templates/clear.ftl"), os);
+                }
             }
         }
     }
@@ -61,7 +57,4 @@ public class UserFilter implements Filter {
 
     }
 
-    private boolean isHttp(ServletRequest servletRequest) {
-        return servletRequest instanceof HttpServletRequest;
-    }
 }

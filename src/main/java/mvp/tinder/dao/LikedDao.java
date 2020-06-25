@@ -1,9 +1,9 @@
 package mvp.tinder.dao;
 
+import lombok.extern.log4j.Log4j2;
 import mvp.tinder.entity.User;
 import mvp.tinder.jdbc.DbConnection;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,44 +17,41 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+@Log4j2
 public class LikedDao implements Dao<User> {
-    private final Connection connect;
-
-    public LikedDao() {
-        this.connect = DbConnection.getConnection();
-    }
-
 
     @Override
-    public List<User> getAll(int index, int id) throws SQLException {
+    public List<User> getAll(int index, int id) {
         List<User> likedUsers = new ArrayList<>();
-
         String SQL = "SELECT * FROM users where id IN (select whom from liked where who = ?) and id != ?";
-        PreparedStatement stmt = connect.prepareStatement(SQL);
-        stmt.setInt(1, index);
-        stmt.setInt(2, index);
-        ResultSet resultSet = stmt.executeQuery();
 
-        while (resultSet.next()) {
-            int idx = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            String surname = resultSet.getString("surname");
-            String url = resultSet.getString("url");
-            String job = resultSet.getString("job");
-            Date date = resultSet.getTimestamp("last_login_time");
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            User user = new User(idx, name, surname, url, job);
+        try (PreparedStatement stmt = DbConnection.getConnection().prepareStatement(SQL)) {
+            stmt.setInt(1, index);
+            stmt.setInt(2, index);
+            ResultSet resultSet = stmt.executeQuery();
 
-            LocalDate b =  date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate a = LocalDate.now();
-            Period period = Period.between(b,a);
+            while (resultSet.next()) {
+                int idx = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String surname = resultSet.getString("surname");
+                String url = resultSet.getString("url");
+                String job = resultSet.getString("job");
+                Date date = resultSet.getTimestamp("last_login_time");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                User user = new User(idx, name, surname, url, job);
 
-            user.setDaysAgo(period.getDays());
-            user.setJob(job);
-            user.setTime(simpleDateFormat.format(date));
-            likedUsers.add(user);
+                LocalDate b = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate a = LocalDate.now();
+                Period period = Period.between(b, a);
+
+                user.setDaysAgo(period.getDays());
+                user.setJob(job);
+                user.setTime(simpleDateFormat.format(date));
+                likedUsers.add(user);
+            }
+        } catch (SQLException e) {
+            log.error("SQL exception");
         }
-
         return likedUsers;
     }
 
@@ -64,13 +61,17 @@ public class LikedDao implements Dao<User> {
     }
 
     @Override
-    public void put(int actualId, User data) throws SQLException {
+    public void put(int actualId, User data) {
         int id = data.getId();
         String SQL = "INSERT INTO liked(who, whom) VALUES(?,?) ";
-        PreparedStatement stmt = connect.prepareStatement(SQL);
-        stmt.setInt(1, actualId);
-        stmt.setInt(2, id);
-        stmt.execute();
+
+        try (PreparedStatement stmt = DbConnection.getConnection().prepareStatement(SQL)) {
+            stmt.setInt(1, actualId);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch (SQLException e) {
+            log.error("SQL exception");
+        }
     }
 
     @Override

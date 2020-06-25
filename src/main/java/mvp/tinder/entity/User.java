@@ -7,11 +7,16 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class User {
-    @NonNull private  int id;
-    @NonNull private String name;
-    @NonNull private String surname;
-    @NonNull private String picture;
-    @NonNull private String job;
+    @NonNull
+    private Integer id;
+    @NonNull
+    private String name;
+    @NonNull
+    private String surname;
+    @NonNull
+    private String picture;
+    @NonNull
+    private String job;
     private String username;
     private String password;
     private String time;
