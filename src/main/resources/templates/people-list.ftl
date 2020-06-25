@@ -7,7 +7,8 @@
     <meta name="author" content="">
 
     <title>People list</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -32,18 +33,20 @@
                                 <tr>
                                     <td width="10">
                                         <div class="avatar-img">
-                                            <img class="img-circle rounded-circle" src="${profile.picture}" style="width: 70px; height: 70px; object-fit: cover"/>  
+                                            <img class="img-circle rounded-circle" src="${profile.picture}"
+                                                 style="width: 70px; height: 70px; object-fit: cover"/>  
                                         </div>
                                     </td>
                                     <td class="align-middle">
                                         ${profile.name} ${profile.surname} <br>
-                                        <a href="/messages/${profile.id}" target="_blank" type="button" class="btn btn-outline-primary btn-sm">send message</a>
+                                        <a href="/messages/${profile.id}" target="_blank" type="button"
+                                           class="btn btn-outline-primary btn-sm">send message</a>
                                     </td>
                                     <td class="align-middle">
                                         ${profile.job}
                                     </td>
-                                    <td  class="align-middle">
-                                        Last Login:  ${profile.time} <br><small class="text-muted">
+                                    <td class="align-middle">
+                                        Last Login: ${profile.time} <br><small class="text-muted">
                                             <#if x="0">Today<#else>${profile.daysAgo} days ago</#if>
                                         </small>
                                     </td>
@@ -54,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <a href="/users"  class="btn btn-success btn-block">Find Love</a>
+            <a href="/users" class="btn btn-success btn-block">Find Love</a>
             <a href="/logout" class="btn btn-dark btn-block">Log out</a>
         </div>
     </div>

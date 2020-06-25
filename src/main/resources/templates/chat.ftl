@@ -7,14 +7,15 @@
     <meta name="author" content="">
 
     <title>Chat</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div class="container" >
+<div class="container">
     <div class="row">
         <div class="chat-main col-6 offset-3">
             <div class="col-md-12 chat-header">
@@ -42,38 +43,38 @@
                 </div>
             </div>
             <form action="" method="post">
-            <div class="chat-content">
-                <div class="col-md-12 chats pt-3 pl-2 pr-3 pb-3">
-                    <ul class="p-0">
-                        <#list messages as message>
-                            <#if message.who = who.id>
-                     <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                ${message.text}
-                            </p>
-                         <span class="receive-msg-time">${message.time}</span>
-                     </li>
-                            </#if>
-                            <#if message.who = whom.id>
-                            <li class="receive-msg float-left mb-2">
-                            <div class="sender-img">
-                                <img src=${whom.picture} class="float-left">
-                            </div>
-                            <div class="receive-msg-desc float-left ml-2">
-                                <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
-                                    ${message.text}
-                                </p>
-                                <span class="receive-msg-time">${message.time}</span>
-                            </div>
-                        </li>
-                            </#if>
-                        </#list>
-                    </ul>
+                <div class="chat-content">
+                    <div class="col-md-12 chats pt-3 pl-2 pr-3 pb-3">
+                        <ul class="p-0">
+                            <#list messages as message>
+                                <#if message.who = who.id>
+                                    <li class="send-msg float-right mb-2">
+                                        <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
+                                            ${message.text}
+                                        </p>
+                                        <span class="receive-msg-time">${message.time}</span>
+                                    </li>
+                                </#if>
+                                <#if message.who = whom.id>
+                                    <li class="receive-msg float-left mb-2">
+                                        <div class="sender-img">
+                                            <img src=${whom.picture} class="float-left">
+                                        </div>
+                                        <div class="receive-msg-desc float-left ml-2">
+                                            <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
+                                                ${message.text}
+                                            </p>
+                                            <span class="receive-msg-time">${message.time}</span>
+                                        </div>
+                                    </li>
+                                </#if>
+                            </#list>
+                        </ul>
 
+                    </div>
+                    <input type="text" name="text" class="border-0" placeholder=" Send message" id="inp"/><br>
+                    <input type="submit" value="Send / Retrieve" id="inp2"/>
                 </div>
-                <input type="text" name="text" class="border-0" placeholder=" Send message" id="inp"/><br>
-                <input type="submit"  value="Send / Retrieve"id="inp2" />
-            </div>
             </form>
         </div>
     </div>

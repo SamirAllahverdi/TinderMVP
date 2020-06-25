@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,21 +16,23 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin" method="post">
+<form class="form-signin" method="post">
 
-        <img  class="mx-auto rounded-circle img-fluid" style="height: 100%; width: 100%; max-height: 200px; max-width: 200px; object-fit: cover" src="https://icon2.cleanpng.com/20180622/pwy/kisspng-cercanas-bilbao-zorrotza-renfe-operadora-cercan-tinder-5b2d1716c16048.0838255415296816867921.jpg">
+    <img class="mx-auto rounded-circle img-fluid"
+         style="height: 100%; width: 100%; max-height: 200px; max-width: 200px; object-fit: cover"
+         src="https://icon2.cleanpng.com/20180622/pwy/kisspng-cercanas-bilbao-zorrotza-renfe-operadora-cercan-tinder-5b2d1716c16048.0838255415296816867921.jpg">
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword"  class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-          or  <br>
-        <a href="/register">Sign up</a>
-        <p class="mt-5 mb-3 text-muted">&copy; Tinder 2018</p>
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    or <br>
+    <a href="/register">Sign up</a>
+    <p class="mt-5 mb-3 text-muted">&copy; Tinder 2018</p>
 
-    </form>
+</form>
 
 </body>
 </html>
