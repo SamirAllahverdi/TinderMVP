@@ -18,7 +18,7 @@ public class TinderApp {
     private static final EnumSet<DispatcherType> DT = EnumSet.of(DispatcherType.REQUEST);
 
     public static void main(String[] args) throws Exception {
-        DbSetup.clearAndMigrate(HerokuEnv.jdbc_url(), HerokuEnv.jdbc_username(), HerokuEnv.jdbc_password());
+        DbSetup.migrate(HerokuEnv.jdbc_url(), HerokuEnv.jdbc_username(), HerokuEnv.jdbc_password());
 
         Server server = new Server(HerokuEnv.port());
         log.info("server started");

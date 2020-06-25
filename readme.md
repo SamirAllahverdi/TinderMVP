@@ -1,12 +1,16 @@
-## The task 
 
-#### Create the MVP of a dating app similar to Tinder
 
-You can find ready HTML templates of all needed pages in the [templates](templates) folder.
+  Example:   Login   Password
+  1.   ross    ross
+  2.   raj     raj
+  3.   penny   penny
+  4.   amy     amy
+Link to deployed version: http://tinder-servlet.herokuapp.com/login
 
-#### Teamwork
-
-All students will work on this project in groups of three persons. Group members may split the tasks on their own discretion.
+Database Credentials:
+ - jdbc_url : jdbc:postgresql://ec2-54-75-229-28.eu-west-1.compute.amazonaws.com:5432/d45kl1vtho0ib8
+ - jdbc_user : mxbtazcrypsove
+ - jdbc_password: a33a8821b6ebc9588cf3b96ac0340b95658aa1289f8ebc3da639f544735b2de7
 
 ## A list of the working endpoints in a fully finished application:
 - /users
@@ -48,3 +52,4 @@ All students will work on this project in groups of three persons. Group members
 31. Use remote database
 32. Assemble the project into the executable JAR archive. Test locally that it is working
 33. Deploy the project on Heroku (or AWS)
+
